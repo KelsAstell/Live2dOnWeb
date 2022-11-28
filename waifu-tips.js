@@ -202,18 +202,9 @@ function initModel() {
     $$(`#${live2dId4}`).setAttribute('width', live2d_settings.live2dWidth);
     if (!live2d_settings.showToolMenu) $$('.waifu-tool').classList.add('hide');
     if (!live2d_settings.canCloseLive2d) $$('.waifu-tool .icon-cross').classList.add('hide');
-    if (!live2d_settings.canSwitchModel) $$('.waifu-tool .icon-next').classList.add('hide');
     if (!live2d_settings.canSwitchHitokoto) $$('.waifu-tool .icon-message').classList.add('hide');
-    if (!live2d_settings.canTakeScreenshot) $$('.waifu-tool .icon-camera').classList.add('hide');
-    if (!live2d_settings.canTurnToHomePage) $$('.waifu-tool .icon-home').classList.add('hide');
     if (!live2d_settings.canTurnToAboutPage) $$('.waifu-tool .icon-about').classList.add('hide');
-    if (!live2d_settings.showVolumeBtn) $$('.waifu-tool .icon-volumeup').classList.add('hide') || $$('.waifu-tool .icon-volumedown').classList.add('hide');
-    $$('.waifu-tool .icon-next').addEventListener('click', () => loadOtherModel());
-    $$('.waifu-tool .icon-home').addEventListener('click', () => window.location = live2d_settings.homePageUrl)
     $$('.waifu-tool .icon-about').addEventListener('click', () => window.open(live2d_settings.aboutPageUrl))
-    $$('.waifu-tool .icon-camera').addEventListener('click', () => {
-        window.live2dCurrentVersion === 3 ? window.live2dv4.CaptureCanvas() : window.live2dv2.captureFrame = true;
-    });
     $$('.waifu-tool .icon-cross').addEventListener('click', () => {
         sessionStorage.setItem('waifuHide', '1');
         window.setTimeout(function () {
@@ -267,7 +258,6 @@ function loadModel(modelName) {
         setLS('modelName', modelName);
     else
         setSS('modelName', modelName);
-    live2d_settings.debug && console.log(`[WaifuTips] 加载模型 ${modelName}`);
     let modelVersion = 2;
     // 在配置中找到要加载模型的版本
     for (let model of live2d_models) {
@@ -484,38 +474,6 @@ function loadTipsMessage(result) {
                             }, 5000);
                         }
                         showMessage(resJson.text, 5000, true);
-                    })
-                break;
-            case 'fghrsh.net':
-                window.fetch('https://api.fghrsh.net/hitokoto/rand/?encode=jsc&uid=3335')
-                    .then(res => res.json())
-                    .then(resJson => {
-                        if (!resJson.source) {
-                            let text = waifu_tips.hitokoto_api_message['fghrsh.net'][0];
-                            text = text.render({source: resJson.source, date: resJson.date});
-                            window.setTimeout(function () {
-                                showMessage(text, 3000, true);
-                            }, 5000);
-                            showMessage(resJson.hitokoto, 5000, true);
-                        }
-                    })
-                break;
-            case 'jinrishici.com':
-                window.fetch('https://v2.jinrishici.com/one.json')
-                    .then(res => res.json())
-                    .then(resJson => {
-                        if (!resJson.data.origin.title) {
-                            let text = waifu_tips.hitokoto_api_message['jinrishici.com'][0];
-                            text = text.render({
-                                title: resJson.data.origin.title,
-                                dynasty: resJson.data.origin.dynasty,
-                                author: resJson.data.origin.author
-                            });
-                            window.setTimeout(function () {
-                                showMessage(text, 3000, true);
-                            }, 5000);
-                        }
-                        showMessage(resJson.data.content, 5000, true);
                     })
                 break;
             default:
