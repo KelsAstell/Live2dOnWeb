@@ -1,4 +1,4 @@
-![Webpack](https://github.com/Konata09/Live2dOnWeb/workflows/Webpack/badge.svg)  
+[![](https://data.jsdelivr.com/v1/package/gh/KelsAstell/Live2dOnWeb/badge)](https://www.jsdelivr.com/package/gh/KelsAstell/Live2dOnWeb)
 
 ENGLISH | [简体中文](https://github.com/Konata09/Live2dOnWeb/blob/master/README_CN.md)
 
